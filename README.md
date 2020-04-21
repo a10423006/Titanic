@@ -18,17 +18,17 @@
 ```
 pd.isnull(train_data).any()
 ```
-| Columns | isNull | 處理方法 |
-| ------- | ------ | ------ |
+| Columns | isNull | Null 數量 |處理方法 |
+| ------- | ------ | :------: | :------: |
 | PassengerId | False |
 | Survived | False |
 | Pclass | False |
 | Name | False |
 | Sex | False |
-| _*Age*_ | _*True*_ | fillna(age_mean) |
+| _*Age*_ | _*True*_ | _*177*_ | _*fillna(age_mean)*_ |
 | SibSp | False |
 | Parch | False |
 | Ticket | False |
 | Fare | False |
-| _*Cabin*_ | _*True*_ | Drop |
-| _*Embarked*_ | _*True*_ | Drop |
+| _*Cabin*_ | _*True*_ | _*687*_ | _*Drop Column*_ |
+| _*Embarked*_ | _*True*_ | _*2*_ | _*Drop Rows*_ |
