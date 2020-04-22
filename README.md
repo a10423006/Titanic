@@ -13,8 +13,8 @@
 運用機器學習建立模型預測在鐵達尼號中可能生存的乘客。
 
 ## Data Set
----
 原始訓練資料(train.csv) 891筆，測試資料(test.csv) 418筆
+* Null 處理
 ```
 pd.isnull(train_data).any()
 ```
@@ -23,12 +23,27 @@ pd.isnull(train_data).any()
 | PassengerId | False |
 | Survived | False |
 | Pclass | False |
-| Name | False | | _**Drop Column**_ |
+| _**Name**_ | False | | _**Drop Column**_ |
 | Sex | False |
 | _**Age**_ | _**True*_ | _**177**_ | _**fillna(age_mean)**_ |
 | SibSp | False |
 | Parch | False |
-| Ticket | False | | _**Drop Column**_ |
+| _**Ticket**_ | False | | _**Drop Column**_ |
 | Fare | False |
 | _**Cabin**_ | _**True**_ | _**687**_ | _**Drop Column**_ |
 | _**Embarked**_ | _**True**_ | _**2**_ | _**Drop Rows**_ |
+
+* Label encoding
+```
+labelencoder = LabelEncoder()
+train_x['Sex'] = labelencoder.fit_transform(train_x['Sex'])
+train_x['Embarked'] = labelencoder.fit_transform(train_x['Embarked'])
+```
+
+* 特徵選取
+
+遞歸特徵消除法並使用決策樹和五折交叉驗證法
+```
+RFECV(estimator=DecisionTreeClassifier(), cv=KFold(n_splits=5), scoring='accuracy').fit(train_x, train_y)
+```
+![RFECV](https://github.com/a10423006/Titanic/blob/master/image/rfecv_cross_validation.png)

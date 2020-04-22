@@ -25,11 +25,11 @@ train_data = train_data.drop('Cabin', 1)
 print(len(np.where(pd.isnull(train_data.Embarked))[0]))
 train_data = train_data.dropna()
 
-#%% # 調整順序 # 處理類別變數
+#%% # 調整順序 # 處理類別變數 # 不納入 Name 和 Ticket
 train_y = train_data['Survived']
 train_x = train_data[['PassengerId', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
 
-#%% #Label encoding
+#%% # Label encoding
 labelencoder = LabelEncoder()
 train_x['Sex'] = labelencoder.fit_transform(train_x['Sex'])
 train_x['Embarked'] = labelencoder.fit_transform(train_x['Embarked'])
@@ -70,5 +70,8 @@ plt.plot(max_position + 1, rfecv.grid_scores_.max(), '-o', ms=20, mfc='darkorang
 plt.annotate(round(rfecv.grid_scores_.max(), 4), xy=(max_position, rfecv.grid_scores_.max()), xytext=(20, -10), textcoords='offset points', fontsize = 20, color='darkorange', weight='bold')
 # 排名註解
 plt.annotate('Features Rank\n'+str(list_rank_rfecv).replace('),', ')\n'), xy=(len(rfecv.grid_scores_)-1.7, rfecv.grid_scores_.min()), xytext=(0, 0), textcoords='offset points', bbox=dict(boxstyle='round'), fontsize = 25, color='w', weight='bold')
-plt.savefig('./rfecv_cross_validation.png')
+plt.savefig('.image/rfecv_cross_validation.png')
 plt.show()
+
+
+# %%
