@@ -47,3 +47,5 @@ train_x['Embarked'] = labelencoder.fit_transform(train_x['Embarked'])
 RFECV(estimator=DecisionTreeClassifier(), cv=KFold(n_splits=5), scoring='accuracy').fit(train_x, train_y)
 ```
 ![RFECV](https://github.com/a10423006/Titanic/blob/master/image/rfecv_cross_validation.png)
+
+![clean data](https://github.com/a10423006/Titanic/blob/master/image/train_x.png)
