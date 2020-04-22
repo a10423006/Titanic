@@ -48,4 +48,6 @@ RFECV(estimator=DecisionTreeClassifier(), cv=KFold(n_splits=5), scoring='accurac
 ```
 ![RFECV](https://github.com/a10423006/Titanic/blob/master/image/rfecv_cross_validation.png)
 
-![clean data](https://github.com/a10423006/Titanic/blob/master/image/train_x.png)
+| Before | After |
+| ------ | ----- |
+| ![clean data](https://github.com/a10423006/Titanic/blob/master/image/pre_train_x.png) | ![clean data](https://github.com/a10423006/Titanic/blob/master/image/train_x.png) |
