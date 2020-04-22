@@ -26,7 +26,7 @@ print(len(np.where(pd.isnull(train_data.Embarked))[0]))
 train_data = train_data.dropna()
 
 #%% # 調整順序 # 處理類別變數 # 不納入 Name 和 Ticket
-train_y = train_data['Survived']
+train_y = train_data['Survived'].astype('category')
 train_x = train_data[['PassengerId', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
 
 #%% # Label encoding
@@ -73,5 +73,20 @@ plt.annotate('Features Rank\n'+str(list_rank_rfecv).replace('),', ')\n'), xy=(le
 plt.savefig('.image/rfecv_cross_validation.png')
 plt.show()
 
+# %% # 生存比例查看
+plt.bar(train_y.cat.categories, train_y.value_counts())
+# 資料標籤
+for a,b in zip(train_y.cat.categories, train_y.value_counts()):  
+    plt.text(a, b+100, '%.0f' % b, ha='center', va= 'bottom',fontsize=11)
+# y軸上限
+plt.ylim(0, len(train_y))
+# x軸label
+plt.xticks(train_y.cat.categories,("Yes", "No"))
+# x軸標題
+plt.xlabel('the outcome for each passenger')
+# y軸標題
+plt.ylabel('Numbers')
+plt.savefig('./image/survived_bar.png')
+plt.show()
 
 # %%
