@@ -51,3 +51,7 @@ RFECV(estimator=DecisionTreeClassifier(), cv=KFold(n_splits=5), scoring='accurac
 | Before | After |
 | ------ | ----- |
 | ![clean data](https://github.com/a10423006/Titanic/blob/master/image/pre_train_x.png) | ![clean data](https://github.com/a10423006/Titanic/blob/master/image/train_x.png) |
+
+* Survived 比例 Bar Chart
+有稍微類別失衡的現象，先建模看看情況吧！
+![bar chart](https://github.com/a10423006/Titanic/blob/master/image/survived_bar.png)
