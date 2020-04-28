@@ -77,7 +77,7 @@ print("accuracy: %f"%dtree_model.best_score_)
 
 #%% # 隨機森林
 rforest_model = GridSearchCV(RandomForestClassifier(), param_grid={
-                        "n_estimators":range(100, 1000, 100),}, cv=KFold(n_splits=5),
+                        "n_estimators":range(10, 100, 10),}, cv=KFold(n_splits=5),
                         scoring='accuracy').fit(train_x, train_y)
 # rforest_model.best_estimator_.get_params() 最佳參數
 joblib.dump(rforest_model , 'rforest_model.pkl')
@@ -91,6 +91,21 @@ mae = mean_absolute_error(rforest_model.predict(train_x), train_y)
 print("MSE:" + str(mse))
 print("MAE: " + str(mae))
 print("accuracy: %f"%rforest_model.best_score_)
+
+# %% # ROC
+y_score = rforest_model.predict_proba(train_x)[:, 1]
+fpr, tpr, threshold = roc_curve(train_y, y_score)
+roc_auc = auc(fpr, tpr)
+
+plt.figure()
+plt.plot(fpr, tpr, label='ROC curve (area = %0.3f)' % roc_auc)
+plt.plot([0, 1], [0, 1], color='black', linestyle='--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver operating characteristic')
+plt.legend(loc="lower right")
+plt.savefig('roc.png')
+plt.show()
 
 #%% # 邏輯迴歸
 logistic_model = GridSearchCV(LogisticRegression(), 
