@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 
 train_data = pd.read_csv('train.csv')
+test_data = pd.read_csv('test.csv')
 
 # %% # 檢查null
 print(pd.isnull(train_data).any())
@@ -45,7 +46,7 @@ for i, n in enumerate(cols):
         list_rfecv.append(n)
 
 select_datas = pd.concat([train_x[list_rfecv], train_y], axis=1)
-select_datas.to_csv('./select_datas.csv', index=False)
+select_datas.to_csv('select_datas.csv', index=False)
 
 # %%
 # 特徵排名
@@ -88,5 +89,3 @@ plt.xlabel('the outcome for each passenger')
 plt.ylabel('Numbers')
 plt.savefig('./image/survived_bar.png')
 plt.show()
-
-# %%
