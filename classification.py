@@ -12,6 +12,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn import tree
 import matplotlib.pyplot as plt
 import joblib
+from preprocessing import pre_data
 
 train = pd.read_csv('select_datas.csv', index_col='PassengerId')
 print(Counter(train.Survived))
@@ -21,8 +22,8 @@ ros = RandomOverSampler(random_state=0)
 resam_train_x, resam_train_y = ros.fit_sample(train[train.columns[:-1]], train.Survived)
 sorted(Counter(resam_train_y).items())
 
-train_x = pd.DataFrame(resam_train_x,columns=train.columns[:-1])
-train_y = pd.DataFrame(resam_train_y,columns=['Survived'], dtype='category')
+train_x = pd.DataFrame(resam_train_x, columns=train.columns[:-1])
+train_y = pd.DataFrame(resam_train_y, columns=['Survived'], dtype='category')
 
 # %% # 生存比例查看
 plt.bar(train_y['Survived'].cat.categories, train_y['Survived'].value_counts())
@@ -104,7 +105,7 @@ plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver operating characteristic')
 plt.legend(loc="lower right")
-plt.savefig('roc.png')
+plt.savefig('./image/roc.png')
 plt.show()
 
 #%% # 邏輯迴歸
@@ -146,3 +147,22 @@ mae = mean_absolute_error(knn_model.predict(train_x), train_y)
 print("MSE:" + str(mse))
 print("MAE: " + str(mae))
 print("accuracy: %f"%knn_model.best_score_)
+
+#%% # 預測結果輸出
+test_data = pd.read_csv('test.csv', index_col='PassengerId')
+
+# %% # 檢查null
+print(pd.isnull(test_data).any())
+print(len(np.where(pd.isnull(test_data.Cabin))[0]))
+print(len(np.where(pd.isnull(test_data.Embarked))[0]))
+
+test_data = pre_data(test_data)[train_x.columns]
+
+# %%
+rforest_model= joblib.load('rforest_model.pkl')
+preds = rforest_model.predict(test_data).tolist()
+preds[:] = [int(x) for x in preds]
+
+# %%
+test_submission = pd.DataFrame({'PassengerId':test_data.index, 'Survived':preds})
+test_submission.to_csv('submission_file.csv', index=0)
