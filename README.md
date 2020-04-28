@@ -55,6 +55,7 @@ RFECV(estimator=DecisionTreeClassifier(), cv=KFold(n_splits=5), scoring='accurac
 * Survived 比例 Bar Chart
 
 有稍微類別失衡的現象，先建模看看情況吧！
+
 ![bar chart](https://github.com/a10423006/Titanic/blob/master/image/survived_bar.png)
 
 ## Classification
@@ -69,6 +70,7 @@ resam_train_x, resam_train_y = ros.fit_sample(train[train.columns[:-1]], train.S
 
 | | SVC | Decision Tree | Random Forest | Logistic Regression | KNN |
 |:--------:|:-----:|:------:|:-----:|:-----:|:-----:|
-| **Accuracy** | 0.769 | 0.850 | <font color="#dd0000">0.864</font> | 0.768 | 0.785 |
-| **MSE** | 0.228 | 0.017 | 0.017 | 0.209 | 0.017 |
-| **MAE** | 0.228 | 0.017 | 0.017 | 0.209 | 0.017 |
+| **Accuracy** | 0.769 | 0.850 | <font color="#dd0000">_0.864_</font> | 0.768 | 0.785 |
+| **MSE** | 0.228 | 0.017 | _0.017_ | 0.209 | 0.017 |
+| **MAE** | 0.228 | 0.017 | _0.017_ | 0.209 | 0.017 |
+![ROC](https://github.com/a10423006/Titanic/blob/master/image/roc.png)
