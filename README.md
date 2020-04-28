@@ -61,7 +61,7 @@ RFECV(estimator=DecisionTreeClassifier(), cv=KFold(n_splits=5), scoring='accurac
 ## Classification
 * Resample(RandomOverSampler)
 
-[imbalanced-learn API](https://imbalanced-learn.readthedocs.io/en/stable/index.html)
+### [imbalanced-learn API](https://imbalanced-learn.readthedocs.io/en/stable/index.html)
 ```
 ros = RandomOverSampler(random_state=0)
 resam_train_x, resam_train_y = ros.fit_sample(train[train.columns[:-1]], train.Survived)
@@ -73,4 +73,5 @@ resam_train_x, resam_train_y = ros.fit_sample(train[train.columns[:-1]], train.S
 | **Accuracy** | 0.769 | 0.850 | <font color="#dd0000">_0.864_</font> | 0.768 | 0.785 |
 | **MSE** | 0.228 | 0.017 | _0.017_ | 0.209 | 0.017 |
 | **MAE** | 0.228 | 0.017 | _0.017_ | 0.209 | 0.017 |
+
 ![ROC](https://github.com/a10423006/Titanic/blob/master/image/roc.png)
