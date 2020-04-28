@@ -8,32 +8,37 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
+def pre_data(data):
+    # %% # 處理 null # Age填上平均值
+    age_mean = data.Age.mean()
+    data.Age = data.Age.fillna(age_mean)
+
+    # Cabin 含有的 NAN 過多，該欄位直接 drop
+    data = data.drop('Cabin', 1)
+
+    # Embarked 含有 NAN較少，將該筆 drop
+    data = data.dropna()
+
+    #%% # Label encoding
+    labelencoder = LabelEncoder()
+    data['Sex'] = labelencoder.fit_transform(data['Sex'])
+    data['Embarked'] = labelencoder.fit_transform(data['Embarked'])
+
+    return data
+
+
 train_data = pd.read_csv('train.csv')
-test_data = pd.read_csv('test.csv')
 
 # %% # 檢查null
 print(pd.isnull(train_data).any())
-
-# %% # 處理 null # Age填上平均值
-age_mean = train_data.Age.mean()
-train_data.Age = train_data.Age.fillna(age_mean)
-
-# Cabin 含有的 NAN 過多，該欄位直接 drop
 print(len(np.where(pd.isnull(train_data.Cabin))[0]))
-train_data = train_data.drop('Cabin', 1)
-
-# Embarked 含有 NAN僅兩筆，將此兩筆 drop
 print(len(np.where(pd.isnull(train_data.Embarked))[0]))
-train_data = train_data.dropna()
+
+train_data = pre_data(train_data)
 
 #%% # 調整順序 # 處理類別變數 # 不納入 Name 和 Ticket
 train_y = train_data['Survived'].astype('category')
 train_x = train_data[['PassengerId', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
-
-#%% # Label encoding
-labelencoder = LabelEncoder()
-train_x['Sex'] = labelencoder.fit_transform(train_x['Sex'])
-train_x['Embarked'] = labelencoder.fit_transform(train_x['Embarked'])
 
 # %% # RFECV 透過 決策樹和 StratifiedKFold 5折交叉驗證尋找最佳特徵數
 cols = train_x.columns[1:]
